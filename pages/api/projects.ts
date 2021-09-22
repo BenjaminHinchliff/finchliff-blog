@@ -1,24 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type {NextApiRequest, NextApiResponse} from 'next';
+import type {ProjectsShape} from '../../components/projects';
 
-type Data = {
-	data: {
-		viewer: {
-			repositories: {
-				edges: [
-					{
-						cursor: string,
-						node: {
-							id: string,
-							name: string,
-							url: string,
-						}
-					}
-				]
-			}
-		}
-	}
-} | string;
+type Data = ProjectsShape | string;
 
 export default async function handler(
 	req: NextApiRequest,
