@@ -6,8 +6,10 @@ import styles from '../styles/Home.module.css';
 import Projects from '../components/projects';
 
 const Home: NextPage = () => (
-	<div>
-		<h1>Benjamin Hinchliff</h1>
+	<div className="container mx-auto">
+		<h1 className="text-center text-4xl font-light my-4">
+			Benjamin Hinchliff
+		</h1>
 		<Projects />
 	</div>
 );
