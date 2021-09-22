@@ -1,21 +1,30 @@
 import React from 'react';
 import '../styles/globals.css';
 import type {AppProps} from 'next/app';
-import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/client';
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import {relayStylePagination} from '@apollo/client/utilities';
 
-const link = new HttpLink({
-	uri: '/api/projects',
+const cache = new InMemoryCache({
+	typePolicies: {
+		User: {
+			fields: {
+				repositories: relayStylePagination(),
+			},
+		},
+	},
 });
 
 const client = new ApolloClient({
-	link,
-	cache: new InMemoryCache(),
+	uri: '/api/projects',
+	cache,
 });
 
 function MyApp({Component, pageProps}: AppProps) {
-	return <ApolloProvider client={client}>
-		<Component {...pageProps} />
-	</ApolloProvider>;
+	return (
+		<ApolloProvider client={client}>
+			<Component {...pageProps} />
+		</ApolloProvider>
+	);
 }
 
 export default MyApp;
