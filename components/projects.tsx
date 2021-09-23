@@ -92,8 +92,9 @@ export default function Projects() {
 
 	const {repositories} = data.viewer;
 	const {nodes, pageInfo} = repositories;
+	const {hasPreviousPage, hasNextPage} = pageInfo;
 
-	const onPrevPage = () => {
+	const prevPage = () => {
 		if (pageInfo.hasPreviousPage) {
 			fetchMore({
 				query: REVERSE_PROJECT_QUERY,
@@ -104,7 +105,7 @@ export default function Projects() {
 		}
 	};
 
-	const onNextPage = () => {
+	const nextPage = () => {
 		if (pageInfo.hasNextPage) {
 			fetchMore({
 				variables: {
@@ -119,7 +120,12 @@ export default function Projects() {
 			{nodes.map(({id, ...props}) => (
 				<Project key={id} {...props} />
 			))}
-			<PageButtons onBack={onPrevPage} onNext={onNextPage} />
+			<PageButtons
+				hasBack={hasPreviousPage}
+				onBack={prevPage}
+				hasNext={hasNextPage}
+				onNext={nextPage}
+			/>
 		</div>
 	);
 }
