@@ -1,25 +1,22 @@
 import React from 'react';
+import PageButton from './page-button';
 
 type Props = {
+	hasBack: boolean;
 	onBack: () => void;
+	hasNext: boolean;
 	onNext: () => void;
 };
 
-export default function PageButtons({onBack, onNext}: Props) {
+export default function PageButtons({hasBack, onBack, hasNext, onNext}: Props) {
 	return (
 		<div className="flex justify-center my-2">
-			<button
-				onClick={onBack}
-				className="border rounded px-2 py-1 bg-gray-300 hover:bg-gray-400"
-			>
-				back
-			</button>
-			<button
-				onClick={onNext}
-				className="border rounded px-2 py-1 bg-gray-300 hover:bg-gray-400"
-			>
-				next
-			</button>
+			<PageButton active={hasBack} onClick={onBack} className="rounded-l">
+				Previous
+			</PageButton>
+			<PageButton active={hasNext} onClick={onNext} className="rounded-r">
+				Next
+			</PageButton>
 		</div>
 	);
 }
