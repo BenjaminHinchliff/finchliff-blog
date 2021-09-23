@@ -14,7 +14,7 @@ export default function Project({url, name, description}: Props) {
 			target="_blank"
 			rel="noreferrer"
 		>
-			<h4 className="font-bold text-xl mb-2">{name}</h4>
+			<h2 className="font-bold text-xl mb-2">{name}</h2>
 			<p className="text-gray-800 truncate">{description ?? '(no description)'}</p>
 		</a>
 	);

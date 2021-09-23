@@ -8,6 +8,7 @@ const Home: NextPage = () => (
 	<>
 		<Head>
 			<title>Ben H - Projects</title>
+			<meta name="description" content="Benjamin (Ben) Hinchliff Projects Page" />
 		</Head>
 		<div className="container mx-auto">
 			<Header />
