@@ -83,11 +83,21 @@ export default function Projects() {
 		useQuery<ProjectsShape>(PROJECT_QUERY);
 
 	if (loading) {
-		return <p>loading...</p>;
+		return (
+			<div
+				className="mx-auto my-4 w-16 h-16 border-4 border-yellow-700 border-solid rounded-full animate-spin"
+				style={{borderTopColor: 'transparent'}}
+			></div>
+		);
 	}
 
 	if (error || !data) {
-		return <p>error :(</p>;
+		return (
+			<p className="text-center my-4">
+				<span className="text-red-400">Error:</span> something went
+				wrong - maybe try again later?
+			</p>
+		);
 	}
 
 	const {repositories} = data.viewer;
