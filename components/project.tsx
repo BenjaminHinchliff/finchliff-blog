@@ -15,7 +15,7 @@ export default function Project({url, name, description}: Props) {
 			rel="noreferrer"
 		>
 			<h4 className="font-bold text-xl mb-2">{name}</h4>
-			<p className="text-gray-800 truncate">{description}</p>
+			<p className="text-gray-800 truncate">{description ?? '(no description)'}</p>
 		</a>
 	);
 }
