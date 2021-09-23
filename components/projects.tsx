@@ -24,7 +24,17 @@ export type ProjectsShape = {
 	};
 };
 
+const CORE_REPO_FIELDS = gql`
+	fragment CoreRepoFields on Repository {
+		id
+		name
+		url
+		description
+	}
+`;
+
 const REVERSE_PROJECT_QUERY = gql`
+	${CORE_REPO_FIELDS}
 	query ProjectsQuery($cursor: String) {
 		viewer {
 			id
@@ -35,10 +45,7 @@ const REVERSE_PROJECT_QUERY = gql`
 				privacy: PUBLIC
 			) {
 				nodes {
-					id
-					name
-					url
-					description
+					...CoreRepoFields
 				}
 				pageInfo {
 					endCursor
@@ -52,6 +59,7 @@ const REVERSE_PROJECT_QUERY = gql`
 `;
 
 const PROJECT_QUERY = gql`
+	${CORE_REPO_FIELDS}
 	query ProjectsQuery($cursor: String) {
 		viewer {
 			id
@@ -62,10 +70,7 @@ const PROJECT_QUERY = gql`
 				privacy: PUBLIC
 			) {
 				nodes {
-					id
-					name
-					url
-					description
+					...CoreRepoFields
 				}
 				pageInfo {
 					endCursor
@@ -79,8 +84,12 @@ const PROJECT_QUERY = gql`
 `;
 
 export default function Projects() {
-	const {loading, error, data, fetchMore} =
-		useQuery<ProjectsShape>(PROJECT_QUERY);
+	const {loading, error, data, fetchMore} = useQuery<ProjectsShape>(
+		PROJECT_QUERY,
+		{
+			fetchPolicy: 'cache-first',
+		},
+	);
 
 	if (loading) {
 		return (
