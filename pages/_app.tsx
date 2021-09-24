@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/globals.css';
 import type {AppProps} from 'next/app';
-import Hero from '../components/hero';
+import Header from '../components/header';
 import Head from 'next/head';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import {relayStylePagination} from '@apollo/client/utilities';
@@ -52,7 +52,7 @@ function MyApp({Component, pageProps}: AppProps) {
 				<meta name="theme-color" content="#ffffff" />
 			</Head>
 			<div className="container mx-auto">
-				<Hero />
+				<Header />
 				<ApolloProvider client={client}>
 					<Component {...pageProps} />
 				</ApolloProvider>
