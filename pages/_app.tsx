@@ -1,10 +1,10 @@
 import React from 'react';
 import '../styles/globals.css';
 import type {AppProps} from 'next/app';
-import Header from '../components/header';
 import Head from 'next/head';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import {relayStylePagination} from '@apollo/client/utilities';
+import Layout from '../components/layout';
 
 const cache = new InMemoryCache({
 	typePolicies: {
@@ -51,12 +51,11 @@ function MyApp({Component, pageProps}: AppProps) {
 				<meta name="msapplication-TileColor" content="#ffffff" />
 				<meta name="theme-color" content="#ffffff" />
 			</Head>
-			<div className="container mx-auto">
-				<Header />
+			<Layout>
 				<ApolloProvider client={client}>
 					<Component {...pageProps} />
 				</ApolloProvider>
-			</div>
+			</Layout>
 		</>
 	);
 }
