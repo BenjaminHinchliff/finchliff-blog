@@ -39,7 +39,7 @@ const REVERSE_PROJECT_QUERY = gql`
 		viewer {
 			id
 			repositories(
-				last: 10
+				last: 20
 				before: $cursor
 				orderBy: {direction: DESC, field: CREATED_AT}
 				privacy: PUBLIC
@@ -64,7 +64,7 @@ const PROJECT_QUERY = gql`
 		viewer {
 			id
 			repositories(
-				first: 10
+				first: 20
 				after: $cursor
 				orderBy: {direction: DESC, field: CREATED_AT}
 				privacy: PUBLIC
@@ -121,6 +121,7 @@ export default function Projects() {
 					cursor: pageInfo.startCursor,
 				},
 			});
+			window.scrollTo(0, 0);
 		}
 	};
 
@@ -131,6 +132,7 @@ export default function Projects() {
 					cursor: pageInfo.endCursor,
 				},
 			});
+			window.scrollTo(0, 0);
 		}
 	};
 
