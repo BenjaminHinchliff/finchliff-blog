@@ -1,7 +1,8 @@
-import React from 'react';
 import {gql, useQuery} from '@apollo/client';
-import Project from './cell';
-import PageButton from './page-button';
+import Project from './project';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Loader from './loader';
+import ErrorMsg from './error-msg';
 
 export type ProjectsShape = {
 	viewer: {
@@ -64,21 +65,11 @@ export default function Projects() {
 	);
 
 	if (loading) {
-		return (
-			<div
-				className="mx-auto my-4 w-16 h-16 border-4 border-yellow-700 border-solid rounded-full animate-spin"
-				style={{borderTopColor: 'transparent'}}
-			/>
-		);
+		return <Loader />;
 	}
 
 	if (error || !data) {
-		return (
-			<p className="text-center my-4">
-				<span className="text-red-400">Error:</span> something went
-				wrong - maybe try again later?
-			</p>
-		);
+		return <ErrorMsg />;
 	}
 
 	const {repositories} = data.viewer;
@@ -95,19 +86,21 @@ export default function Projects() {
 		}
 	};
 
-	return (
-		<div>
-			{edges
-				.map(({node}) => node)
-				.map(({id, ...props}) => (
-					<Project key={id} {...props} />
-				))}
+	const projects = edges
+		.map(({node}) => node)
+		.map(({id, ...props}) => <Project key={id} {...props} />);
 
-			<div className="flex justify-center my-2">
-				<PageButton active={hasNextPage} onClick={loadMore}>
-					Load More
-				</PageButton>
-			</div>
-		</div>
+	return (
+		<InfiniteScroll
+			dataLength={projects.length}
+			next={loadMore}
+			hasMore={hasNextPage}
+			loader={<Loader />}
+			endMessage={
+				<p className="text-center text-lg">That's all folks!</p>
+			}
+		>
+			{projects}
+		</InfiniteScroll>
 	);
 }
