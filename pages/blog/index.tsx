@@ -1,4 +1,4 @@
-import {GetServerSideProps, NextPage} from 'next';
+import {GetStaticProps, NextPage} from 'next';
 import React from 'react';
 import Head from 'next/head';
 import clientPromise from '../../util/mongodb';
@@ -29,7 +29,7 @@ const Blog: NextPage<Props> = ({posts}) => (
 
 export default Blog;
 
-export const getServerSideProps: GetServerSideProps = async _context => {
+export const getStaticProps: GetStaticProps = async _context => {
 	const client = await clientPromise;
 
 	const posts = await client.db().collection('posts').find().toArray();
