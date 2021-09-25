@@ -1,12 +1,10 @@
-import React from 'react';
-
 type Props = {
 	url?: string;
 	name: string;
 	description: string;
 };
 
-export default function Cell({url, name, description}: Props) {
+export default function Project({url, name, description}: Props) {
 	return (
 		<a
 			className="max-w-full block border-b border-gray-400 my-2 px-6 py-4 h-24"
