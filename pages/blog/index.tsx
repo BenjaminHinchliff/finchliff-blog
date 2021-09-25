@@ -2,16 +2,14 @@ import {GetServerSideProps, NextPage} from 'next';
 import React from 'react';
 import Head from 'next/head';
 import clientPromise from '../../util/mongodb';
-import Cell from '../../components/project';
-
-type Post = {
-	_id: string;
-	name: string;
-	content: string;
-};
+import Post from '../../components/post';
 
 type Props = {
-	posts: Post[];
+	posts: {
+		_id: string;
+		name: string;
+		content: string;
+	}[];
 };
 
 const Blog: NextPage<Props> = ({posts}) => (
@@ -24,7 +22,7 @@ const Blog: NextPage<Props> = ({posts}) => (
 			/>
 		</Head>
 		{posts.map(({_id, ...props}) => (
-			<Cell key={_id} {...props} />
+			<Post key={_id} {...props} />
 		))}
 	</>
 );
