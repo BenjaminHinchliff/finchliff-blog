@@ -1,15 +1,11 @@
-import type {ReactNode} from 'react';
+import type {FunctionComponent} from 'react';
 import Header from './header';
 
-type Props = {
-	children?: ReactNode;
-};
+const Layout: FunctionComponent = ({children}) => (
+	<main className="container mx-auto">
+		<Header />
+		{children}
+	</main>
+);
 
-export default function Layout({children}: Props) {
-	return (
-		<main className="container mx-auto">
-			<Header />
-			{children}
-		</main>
-	);
-}
+export default Layout;

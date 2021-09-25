@@ -4,10 +4,7 @@ import type {ProjectsShape} from '../../components/projects';
 
 type Data = ProjectsShape | string;
 
-export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse<Data>,
-) {
+export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 	const {method} = req;
 	if (method !== 'POST') {
 		res.status(400).send('400 Bad Request');
@@ -26,4 +23,4 @@ export default async function handler(
 	} catch (_) {
 		res.status(500).send('');
 	}
-}
+};

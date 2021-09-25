@@ -3,6 +3,7 @@ import Project from './project';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from './loader';
 import ErrorMsg from './error-msg';
+import {FunctionComponent} from 'react';
 
 export type ProjectsShape = {
 	viewer: {
@@ -56,7 +57,7 @@ const PROJECT_QUERY = gql`
 	}
 `;
 
-export default function Projects() {
+const Projects: FunctionComponent = () => {
 	const {loading, error, data, fetchMore} = useQuery<ProjectsShape>(
 		PROJECT_QUERY,
 		{
@@ -103,4 +104,6 @@ export default function Projects() {
 			{projects}
 		</InfiniteScroll>
 	);
-}
+};
+
+export default Projects;

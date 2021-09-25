@@ -1,5 +1,5 @@
 import type {FunctionComponent} from 'react';
-import {Preview} from './preview';
+import Preview from './preview';
 import PreviewBody from './preview-body';
 import PreviewTitle from './preview-title';
 
