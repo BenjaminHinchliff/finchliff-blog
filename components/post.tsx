@@ -12,7 +12,7 @@ type Props = {
 
 const Post: FunctionComponent<Props> = ({slug, name, content}) => (
 	<Preview>
-		<Link href={`/blog/${slug}`}>
+		<Link href={`/blog/${encodeURIComponent(slug)}`}>
 			<a>
 				<PreviewTitle>{name}</PreviewTitle>
 				<PreviewBody>{content}</PreviewBody>
