@@ -21,7 +21,10 @@ const client = new ApolloClient({
 	cache,
 });
 
-const MyApp: FunctionComponent<AppProps> = ({Component, pageProps}) => (
+const MyApp: FunctionComponent<AppProps> = ({
+	Component,
+	pageProps: {session, ...pageProps},
+}) => (
 	<>
 		<Head>
 			<link
