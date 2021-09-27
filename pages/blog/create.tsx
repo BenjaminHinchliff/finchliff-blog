@@ -1,6 +1,7 @@
 import type {NextPage} from 'next';
 import {signIn, signOut, useSession} from 'next-auth/client';
 import {FormEvent, useState} from 'react';
+import Loader from '../../components/loader';
 
 function nameToSlug(title: string): string {
 	return title
@@ -11,9 +12,13 @@ function nameToSlug(title: string): string {
 }
 
 const Create: NextPage = () => {
-	const [session] = useSession();
+	const [session, loading] = useSession();
 	const [name, setName] = useState('');
 	const [content, setContent] = useState('');
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
