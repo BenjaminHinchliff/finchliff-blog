@@ -3,7 +3,11 @@ import {signIn, signOut, useSession} from 'next-auth/client';
 import {FormEvent, useState} from 'react';
 
 function nameToSlug(title: string): string {
-	return title.toLocaleLowerCase().trim().replaceAll(' ', '-');
+	return title
+		.trim()
+		.toLocaleLowerCase()
+		.replaceAll(' ', '-')
+		.replaceAll(/[^\w-]+/g, '');
 }
 
 const Create: NextPage = () => {
