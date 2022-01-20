@@ -1,7 +1,6 @@
 import type {FunctionComponent} from 'react';
 import Image from 'next/image';
 import logoPic from '../public/logo.svg';
-import Navbar from './navbar';
 
 const Header: FunctionComponent = () => (
 	<div>
@@ -11,7 +10,6 @@ const Header: FunctionComponent = () => (
 			</div>
 			<h1 className="relative text-6xl font-light">Benjamin Hinchliff</h1>
 		</div>
-		<Navbar />
 	</div>
 );
 
