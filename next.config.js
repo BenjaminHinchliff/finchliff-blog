@@ -1,11 +1,14 @@
 /** @type {import('next').NextConfig} */
 
+const prod = process.env.NODE_ENV === 'production';
+
 const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  child-src 'self';
-  style-src 'self';
-  font-src 'self';
+	base-uri 'self';
+  	default-src 'self';
+  	script-src 'self' ${prod ? '' : '\'unsafe-eval\''};
+	img-src 'self' data:;
+  	style-src 'self' 'unsafe-inline';
+  	font-src 'self';
 `;
 
 const securityHeaders = [
