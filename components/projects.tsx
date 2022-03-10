@@ -1,9 +1,9 @@
-import {gql, useQuery} from '@apollo/client';
 import Project from './project';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from './loader';
 import ErrorMsg from './error-msg';
-import {FunctionComponent} from 'react';
+import {FunctionComponent, useState} from 'react';
+import {gql, useQuery} from 'urql';
 
 export type ProjectsShape = {
 	viewer: {
@@ -49,8 +49,6 @@ const PROJECT_QUERY = gql`
 				pageInfo {
 					endCursor
 					hasNextPage
-					hasPreviousPage
-					startCursor
 				}
 			}
 		}
@@ -58,18 +56,22 @@ const PROJECT_QUERY = gql`
 `;
 
 const Projects: FunctionComponent = () => {
-	const {loading, error, data, fetchMore} = useQuery<ProjectsShape>(
-		PROJECT_QUERY,
-		{
-			fetchPolicy: 'cache-first',
-		},
-	);
+	const [cursor, setCursor] = useState<string | null>(null);
 
-	if (loading) {
+	const [result] = useQuery<ProjectsShape>({
+		query: PROJECT_QUERY,
+		variables: {
+			cursor,
+		},
+	});
+
+	const {data, error} = result;
+
+	if (!data) {
 		return <Loader />;
 	}
 
-	if (error || !data) {
+	if (error) {
 		return <ErrorMsg />;
 	}
 
@@ -79,11 +81,7 @@ const Projects: FunctionComponent = () => {
 
 	const loadMore = () => {
 		if (hasNextPage) {
-			fetchMore({
-				variables: {
-					cursor: pageInfo.endCursor,
-				},
-			});
+			setCursor(pageInfo.endCursor);
 		}
 	};
 

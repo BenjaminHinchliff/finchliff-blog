@@ -2,23 +2,23 @@ import React, {FunctionComponent} from 'react';
 import '../styles/globals.css';
 import type {AppProps} from 'next/app';
 import Head from 'next/head';
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
-import {relayStylePagination} from '@apollo/client/utilities';
 import Layout from '../components/layout';
+import {createClient, fetchExchange, Provider} from 'urql';
+import {cacheExchange} from '@urql/exchange-graphcache';
+import {relayPagination} from '@urql/exchange-graphcache/extras';
+import {devtoolsExchange} from '@urql/devtools';
 
-const cache = new InMemoryCache({
-	typePolicies: {
+const cache = cacheExchange({
+	resolvers: {
 		User: {
-			fields: {
-				repositories: relayStylePagination(),
-			},
+			repositories: relayPagination(),
 		},
 	},
 });
 
-const client = new ApolloClient({
-	uri: '/api/projects',
-	cache,
+const client = createClient({
+	url: '/api/projects',
+	exchanges: [devtoolsExchange, cache, fetchExchange],
 });
 
 const MyApp: FunctionComponent<AppProps> = ({
@@ -54,9 +54,9 @@ const MyApp: FunctionComponent<AppProps> = ({
 			<meta name="theme-color" content="#ffffff" />
 		</Head>
 		<Layout>
-			<ApolloProvider client={client}>
+			<Provider value={client}>
 				<Component {...pageProps} />
-			</ApolloProvider>
+			</Provider>
 		</Layout>
 	</>
 );
